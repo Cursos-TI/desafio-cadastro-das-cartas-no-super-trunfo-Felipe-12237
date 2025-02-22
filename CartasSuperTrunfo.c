@@ -24,9 +24,31 @@ double calcular_densidade_populacional(int populacao, double area) {
     return populacao / area;
 }
 
+int calcular_super_poder(Cartas carta) {
+    return carta.populacao + carta.pontos_turisticos + (int)carta.pib + (int)carta.area;
+}
+
+void comparar_cartas(Cartas carta1, Cartas carta2) {
+    int super_poder1 = calcular_super_poder(carta1);
+    int super_poder2 = calcular_super_poder(carta2);
+
+    printf("\n--- Resultado da Comparação ---\n");
+    printf("Super Poder de %s: %d\n", carta1.nome, super_poder1);
+    printf("Super Poder de %s: %d\n", carta2.nome, super_poder2);
+
+    if (super_poder1 > super_poder2) {
+        printf("%s vence!\n", carta1.nome);
+    } else if (super_poder2 > super_poder1) {
+        printf("%s vence!\n", carta2.nome);
+    } else {
+        printf("Empate!\n");
+    }
+}
+
 int main() {
     Cartas carta1, carta2;
 
+    //dados da carta1
     printf("Digite o nome da cidade: \n");
     scanf(" %[^\n]s", carta1.nome);
     printf("Digite o estado: \n");
@@ -41,12 +63,13 @@ int main() {
     scanf("%d", &carta1.pontos_turisticos);
     printf("Digite o PIB:");
     scanf("%lf", &carta1.pib);
-  
+
     carta1.pib_per_capita = calcular_pib_per_capita(carta1.pib, carta1.populacao);
     carta1.densidade = calcular_densidade_populacional(carta1.populacao, carta1.area);
 
-    while (getchar() != '\n'); 
-   
+    while (getchar() != '\n');
+
+    //Dados da carta2
     printf("Digite o nome da cidade: \n");
     scanf(" %[^\n]s", carta2.nome);
     printf("Digite o estado: \n");
@@ -65,7 +88,6 @@ int main() {
     carta2.pib_per_capita = calcular_pib_per_capita(carta2.pib, carta2.populacao);
     carta2.densidade = calcular_densidade_populacional(carta2.populacao, carta2.area);
 
-    // Dados da carta 1
     printf("\nDados da primeira carta:\n");
     printf("Nome:%s \n", carta1.nome);
     printf("Estado:%s \n", carta1.estado);
@@ -77,7 +99,6 @@ int main() {
     printf("PIB per capita: %.2lf\n", carta1.pib_per_capita);
     printf("Densidade populacional: %.2lf\n", carta1.densidade);
 
-    //Dados da carta 2
     printf("\nDados da segunda carta:\n");
     printf("Nome:%s \n", carta2.nome);
     printf("Estado:%s \n", carta2.estado);
@@ -88,6 +109,8 @@ int main() {
     printf("Pontos turisticos:%d \n", carta2.pontos_turisticos);
     printf("PIB per capita: %.2lf\n", carta2.pib_per_capita);
     printf("Densidade populacional: %.2lf\n", carta2.densidade);
+
+    comparar_cartas(carta1, carta2);
 
     return 0;
 }
